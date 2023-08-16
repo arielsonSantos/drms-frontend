@@ -16,7 +16,7 @@ export default function NetworkError({ error, reset }) {
                 <p>Erro: {error.message}</p>
             </div>
             <div className="d-flex justify-content-center">
-                <Button className="btn btn-danger" onClick={() => reload()}>Recarregar</Button>
+                <Button variant="danger" onClick={() => reload()}>Recarregar</Button>
             </div>
         </div>
     );

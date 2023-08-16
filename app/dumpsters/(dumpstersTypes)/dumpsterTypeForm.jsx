@@ -8,9 +8,8 @@ import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { createDumpsterType, refreshAllDumpstersTypes } from "./dumpsterTypeServices";
 import { toast } from "react-toastify";
-import { TAB_KEYS } from "../dumpsterTabKeys";
 
-export default function DumpsterTypeForm({ setKey }) {
+export default function DumpsterTypeForm({ onHideModal }) {
     const [dumpsterTypesDescription, setDumpsterTypesDescription] = useState(null);
 
     function onSubmit(e) {
@@ -19,7 +18,7 @@ export default function DumpsterTypeForm({ setKey }) {
             .then(() => {
                 e.target.reset();
                 setDumpsterTypesDescription(null);
-                setKey(TAB_KEYS.DUMPSTERS_TYPE_LIST);
+                onHideModal();
                 refreshAllDumpstersTypes();
                 toast.success("Tipo de caçamba cadastrado com sucesso!");
             })
@@ -31,22 +30,22 @@ export default function DumpsterTypeForm({ setKey }) {
     return (
         <Container fluid>
             <Form className="grid" onSubmit={onSubmit}>
-                <Row className="d-flex justify-content-center" >
-                    <Col xs={1}>
-                        <Form.Group >
+                <Row className="text-center">
+                    <Col>
+                        <Form.Group>
                             <Form.Label htmlFor="description">Descrição</Form.Label>
                         </Form.Group>
                     </Col>
-                    <Col xs={2}>
+                    <Col>
                         <Form.Group>
-                            <Form.Control type="text" id="description" onChange={(e) => setDumpsterTypesDescription(e.target.value)}></Form.Control>
+                            <Form.Control autoFocus type="text" id="description" onChange={(e) => setDumpsterTypesDescription(e.target.value)}></Form.Control>
                         </Form.Group>
                     </Col>
                 </Row>
                 <Row className="m-2">
-                    <Col className="d-flex justify-content-center">
-                        <Button type="submit" className="btn btn-success m-1">Salvar</Button>
-                        <Button type="reset" className="btn btn-secondary m-1">Limpar</Button>
+                    <Col className="text-center">
+                        <Button type="submit" variant="success" className="m-1">Salvar</Button>
+                        <Button type="reset" variant="secondary" className="m-1">Limpar</Button>
                     </Col>
                 </Row>
             </Form>
