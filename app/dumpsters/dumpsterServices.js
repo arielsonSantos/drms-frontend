@@ -1,5 +1,5 @@
 import useSWR, { mutate } from "swr";
-import { axiosInstance, axiosFetcher } from "../fetchConfig";
+import { axiosInstance, axiosFetcher, handleError } from "../fetchConfig";
 
 const dumpsterEndpoint = "dumpster";
 
@@ -16,14 +16,35 @@ export function useGetAllDumpsters() {
     };
 }
 
+export function refreshAllDumpsters() {
+    mutate(dumpsterEndpoint);
+}
+
 export async function createDumpster(dumpster) {
     return axiosInstance.post(dumpsterEndpoint, dumpster)
         .then(response => {
             if (response.status != 201)
-                throw new Error("Erro ao criar nova caçamba! => " + response.status + " - " + response.statusText);
-        });
+                throw new Error("Erro ao criar caçamba! => " + response.status + " - " + response.statusText);
+        })
+        .catch(error => handleError(error));
 }
 
-export function refreshAllDumpsters() {
-    mutate(dumpsterEndpoint);
+export async function getDumpsters() {
+    return axiosInstance.get(dumpsterEndpoint)
+        .then(response => {
+            if (response.status != 200)
+                throw new Error("Erro ao listar caçambas! => " + response.status + " - " + response.statusText);
+
+            return response.data;
+        })
+        .catch(error => handleError(error));
+}
+
+export async function deleteDumpster(id) {
+    return axiosInstance.delete(dumpsterEndpoint + "/" + id)
+        .then(response => {
+            if (response.status != 204)
+                throw new Error("Erro ao apagar tipo de caçamba! => " + response.status + " - " + response.statusText);
+        })
+        .catch(error => handleError(error));
 }

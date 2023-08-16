@@ -1,7 +1,7 @@
 export default function NoData() {
     return (
-        <div className="d-flex justify-content-center">
-            <p>Nenhum registro encontrado!</p>
-        </div>
+        <tr className="text-center">
+            <td colSpan={"100%"}>Nenhum registro encontrado!</td>
+        </tr>
     );
 }
