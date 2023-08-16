@@ -27,8 +27,8 @@ export default function DumpsterTable({ children }) {
     function deleteDumpsterById() {
         deleteDumpster(selectedDumpster.id)
             .then(() => {
-                refreshAllDumpsters();
                 handleClose();
+                refreshAllDumpsters();
                 setSelectedDumpster(null);
                 toast.success("Caçamba excluída com sucesso!");
             })

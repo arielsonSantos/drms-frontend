@@ -27,8 +27,8 @@ export default function DumpsterTypeTable({ children }) {
     function deleteType() {
         deleteDumpsterType(selectedType.id)
             .then(() => {
-                refreshAllDumpstersTypes();
                 handleClose();
+                refreshAllDumpstersTypes();
                 setSelectedType(null);
                 toast.success("Tipo de caçamba excluído com sucesso!");
             })

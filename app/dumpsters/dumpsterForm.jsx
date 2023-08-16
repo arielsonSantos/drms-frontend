@@ -13,14 +13,14 @@ import { InputGroup } from "react-bootstrap";
 import { faRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function DumpsterForm({ onHideModal }) {
+export default function DumpsterForm({ hideModal }) {
     const [dumpsterIdentifier, setDumpsterIdentifier] = useState(null);
     const [dumpsterType, setDumpsterType] = useState(null);
     const [dumpstersTypes, setDumpstersTypes] = useState(null);
 
     useEffect(() => {
         refreshTypes();
-    }, [onHideModal]);
+    }, [hideModal]);
 
     function refreshTypes() {
         getDumpstersTypes()
@@ -40,7 +40,7 @@ export default function DumpsterForm({ onHideModal }) {
                 e.target.reset();
                 setDumpsterIdentifier(null);
                 setDumpsterType(null);
-                onHideModal();
+                hideModal();
                 refreshAllDumpsters();
                 toast.success("Caçamba cadastrada com sucesso!");
             })

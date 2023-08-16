@@ -8,12 +8,12 @@ export default function NetworkError({ error, reset }) {
     const router = useRouter();
     const reload = reset || router.refresh;
 
-    toast.error(`Erro: ${error.message}`);
+    toast.error(error.message);
 
     return (
         <div>
             <div className="d-flex justify-content-center">
-                <p>Erro: {error.message}</p>
+                <p>{error.message}</p>
             </div>
             <div className="d-flex justify-content-center">
                 <Button variant="danger" onClick={() => reload()}>Recarregar</Button>

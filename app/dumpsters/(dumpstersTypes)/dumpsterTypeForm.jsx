@@ -9,7 +9,7 @@ import { useState } from "react";
 import { createDumpsterType, refreshAllDumpstersTypes } from "./dumpsterTypeServices";
 import { toast } from "react-toastify";
 
-export default function DumpsterTypeForm({ onHideModal }) {
+export default function DumpsterTypeForm({ hideModal }) {
     const [dumpsterTypesDescription, setDumpsterTypesDescription] = useState(null);
 
     function onSubmit(e) {
@@ -18,7 +18,7 @@ export default function DumpsterTypeForm({ onHideModal }) {
             .then(() => {
                 e.target.reset();
                 setDumpsterTypesDescription(null);
-                onHideModal();
+                hideModal();
                 refreshAllDumpstersTypes();
                 toast.success("Tipo de caçamba cadastrado com sucesso!");
             })

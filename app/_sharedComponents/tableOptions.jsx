@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 export default function TableOptions({ title, refresh, Form }) {
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
 
     return (
         <div>
@@ -34,7 +35,7 @@ export default function TableOptions({ title, refresh, Form }) {
                 </Col>
             </Row>
 
-            <AddModal title={title} setShow={setShow} Form={Form} show={show} />
+            <AddModal title={title} handleClose={handleClose} Form={Form} show={show} />
         </div>
     );
 }
