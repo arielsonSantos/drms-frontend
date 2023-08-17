@@ -20,11 +20,15 @@ export function refreshAllDumpsters() {
     mutate(dumpsterEndpoint);
 }
 
-export async function createDumpster(dumpster) {
-    return axiosInstance.post(dumpsterEndpoint, dumpster)
+export async function createDumpster(dumpster, method, id = "") {
+    return axiosInstance({
+        method: method,
+        url: dumpsterEndpoint + "/" + id,
+        data: dumpster
+    })
         .then(response => {
             if (response.status != 201)
-                throw new Error("Erro ao criar caçamba! => " + response.status + " - " + response.statusText);
+                throw new Error("Erro ao salvar caçamba! => " + response.status + " - " + response.statusText);
         })
         .catch(error => handleError(error));
 }

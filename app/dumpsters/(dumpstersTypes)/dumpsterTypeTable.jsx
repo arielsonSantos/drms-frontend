@@ -9,25 +9,36 @@ import DeleteModal from "@/app/_sharedComponents/deleteModal";
 import { useState } from "react";
 import NoData from "@/app/_sharedComponents/noData";
 import { toast } from "react-toastify";
+import EditModal from "@/app/_sharedComponents/editModal";
 
 export default function DumpsterTypeTable({ children }) {
-    const [show, setShow] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
     const [selectedType, setSelectedType] = useState(null);
     let types = children;
 
-    function handleShow(type) {
+    function handleDeleteModalShow(type) {
         setSelectedType(type);
-        setShow(true);
+        setShowDeleteModal(true);
     }
 
-    function handleClose() {
-        setShow(false);
+    function handleDeleteModalClose() {
+        setShowDeleteModal(false);
+    }
+
+    function handleEditModalShow(type) {
+        setSelectedType(type);
+        setShowEditModal(true);
+    }
+
+    function handleEditModalClose() {
+        setShowEditModal(false);
     }
 
     function deleteType() {
         deleteDumpsterType(selectedType.id)
             .then(() => {
-                handleClose();
+                handleDeleteModalClose();
                 refreshAllDumpstersTypes();
                 setSelectedType(null);
                 toast.success("Tipo de caçamba excluído com sucesso!");
@@ -55,14 +66,15 @@ export default function DumpsterTypeTable({ children }) {
                         types.map((dumpsterType) =>
                             <tr key={dumpsterType.id}>
                                 <td>{dumpsterType.description}</td>
-                                <td><TableActions showDeleteModal={() => handleShow(dumpsterType)} /></td>
+                                <td><TableActions showDeleteModal={() => handleDeleteModalShow(dumpsterType)} showEditModal={() => handleEditModalShow(dumpsterType)} /></td>
                             </tr>
                         )
                     }
                 </tbody>
             </Table>
 
-            <DeleteModal title={selectedType?.description} handleClose={handleClose} show={show} deleteFunction={deleteType} />
+            <DeleteModal title={selectedType?.description} handleClose={handleDeleteModalClose} show={showDeleteModal} deleteFunction={deleteType} />
+            <EditModal title="Tipos de caçambas" handleClose={handleEditModalClose} Form={DumpsterTypeForm} show={showEditModal} selectedObject={selectedType} />
         </div>
     );
 }

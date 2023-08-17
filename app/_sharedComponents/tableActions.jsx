@@ -3,10 +3,10 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Button, Stack } from "react-bootstrap";
 
-export default function TableActions({ showDeleteModal }) {
+export default function TableActions({ showDeleteModal, showEditModal }) {
     return (
         <Stack direction="horizontal" gap={1} className="justify-content-center">
-            <Button>
+            <Button onClick={showEditModal}>
                 <FontAwesomeIcon icon={faPenToSquare} />
             </Button>
             <Button variant="danger" onClick={showDeleteModal}>

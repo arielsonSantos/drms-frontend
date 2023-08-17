@@ -9,16 +9,16 @@ import { useState } from "react";
 import { createDumpsterType, refreshAllDumpstersTypes } from "./dumpsterTypeServices";
 import { toast } from "react-toastify";
 
-export default function DumpsterTypeForm({ hideModal }) {
-    const [dumpsterTypesDescription, setDumpsterTypesDescription] = useState(null);
+export default function DumpsterTypeForm({ hideModal, method = "post", selectedObject }) {
+    const [dumpsterTypesDescription, setDumpsterTypesDescription] = useState(selectedObject?.description);
 
     function onSubmit(e) {
         e.preventDefault();
-        createDumpsterType({ "description": dumpsterTypesDescription })
+        createDumpsterType({ "description": dumpsterTypesDescription }, method, selectedObject?.id)
             .then(() => {
                 e.target.reset();
-                setDumpsterTypesDescription(null);
                 hideModal();
+                setDumpsterTypesDescription(null);
                 refreshAllDumpstersTypes();
                 toast.success("Tipo de caçamba cadastrado com sucesso!");
             })
@@ -38,7 +38,7 @@ export default function DumpsterTypeForm({ hideModal }) {
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Control autoFocus type="text" id="description" onChange={(e) => setDumpsterTypesDescription(e.target.value)}></Form.Control>
+                            <Form.Control autoFocus value={dumpsterTypesDescription || ""} type="text" id="description" onChange={(e) => setDumpsterTypesDescription(e.target.value)}></Form.Control>
                         </Form.Group>
                     </Col>
                 </Row>

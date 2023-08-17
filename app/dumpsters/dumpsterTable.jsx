@@ -9,25 +9,36 @@ import NoData from "../_sharedComponents/noData";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import DeleteModal from "../_sharedComponents/deleteModal";
+import EditModal from "../_sharedComponents/editModal";
 
 export default function DumpsterTable({ children }) {
-    const [show, setShow] = useState(false);
+    const [showDeleteModal, setDeleteModalShow] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
     const [selectedDumpster, setSelectedDumpster] = useState(null);
     let dumpsters = children;
 
-    function handleShow(type) {
+    function handleDeleteModalShow(type) {
         setSelectedDumpster(type);
-        setShow(true);
+        setDeleteModalShow(true);
     }
 
-    function handleClose() {
-        setShow(false);
+    function handleDeleteModalClose() {
+        setDeleteModalShow(false);
+    }
+
+    function handleEditModalShow(dumpster) {
+        setSelectedDumpster(dumpster);
+        setShowEditModal(true);
+    }
+
+    function handleEditModalClose() {
+        setShowEditModal(false);
     }
 
     function deleteDumpsterById() {
         deleteDumpster(selectedDumpster.id)
             .then(() => {
-                handleClose();
+                handleDeleteModalClose();
                 refreshAllDumpsters();
                 setSelectedDumpster(null);
                 toast.success("Caçamba excluída com sucesso!");
@@ -59,14 +70,15 @@ export default function DumpsterTable({ children }) {
                                 <td>{dumpster.identifier}</td>
                                 <td>{dumpster.type?.description}</td>
                                 <td>{dumpster.status}</td>
-                                <td><TableActions showDeleteModal={() => handleShow(dumpster)} /></td>
+                                <td><TableActions showDeleteModal={() => handleDeleteModalShow(dumpster)} showEditModal={() => handleEditModalShow(dumpster)} /></td>
                             </tr>
                         )
                     }
                 </tbody>
             </Table>
 
-            <DeleteModal title={selectedDumpster?.identifier} handleClose={handleClose} show={show} deleteFunction={deleteDumpsterById} />
+            <DeleteModal title={selectedDumpster?.identifier} handleClose={handleDeleteModalClose} show={showDeleteModal} deleteFunction={deleteDumpsterById} />
+            <EditModal title="Caçambas" handleClose={handleEditModalClose} Form={DumpsterForm} show={showEditModal} selectedObject={selectedDumpster} />
         </div>
     );
 }

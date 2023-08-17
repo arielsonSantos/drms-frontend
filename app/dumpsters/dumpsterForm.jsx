@@ -13,19 +13,18 @@ import { InputGroup } from "react-bootstrap";
 import { faRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function DumpsterForm({ hideModal }) {
-    const [dumpsterIdentifier, setDumpsterIdentifier] = useState(null);
-    const [dumpsterType, setDumpsterType] = useState(null);
+export default function DumpsterForm({ hideModal, method = "post", selectedObject }) {
+    const [dumpsterIdentifier, setDumpsterIdentifier] = useState(selectedObject?.identifier);
+    const [dumpsterType, setDumpsterType] = useState(selectedObject?.type?.id);
     const [dumpstersTypes, setDumpstersTypes] = useState(null);
 
     useEffect(() => {
-        refreshTypes();
+        fetchTypes();
     }, [hideModal]);
 
-    function refreshTypes() {
+    function fetchTypes() {
         getDumpstersTypes()
             .then(data => {
-                setDumpsterType(data[0]?.id);
                 setDumpstersTypes(data);
             })
             .catch(error => {
@@ -35,12 +34,12 @@ export default function DumpsterForm({ hideModal }) {
 
     function onSubmit(e) {
         e.preventDefault();
-        createDumpster({ "identifier": dumpsterIdentifier, "type": { "id": dumpsterType } })
+        createDumpster({ "identifier": dumpsterIdentifier, "type": { "id": dumpsterType } }, method, selectedObject?.id)
             .then(() => {
                 e.target.reset();
+                hideModal();
                 setDumpsterIdentifier(null);
                 setDumpsterType(null);
-                hideModal();
                 refreshAllDumpsters();
                 toast.success("Caçamba cadastrada com sucesso!");
             })
@@ -56,17 +55,18 @@ export default function DumpsterForm({ hideModal }) {
                     <Col>
                         <Form.Group>
                             <Form.Label htmlFor="identifier">Identificador</Form.Label>
-                            <Form.Control autoFocus type="text" id="identifier" onChange={(e) => setDumpsterIdentifier(e.target.value)}></Form.Control>
+                            <Form.Control autoFocus value={dumpsterIdentifier || ""} type="text" id="identifier" onChange={(e) => setDumpsterIdentifier(e.target.value)}></Form.Control>
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group>
                             <Form.Label htmlFor="type">Tipo</Form.Label>
                             <InputGroup>
-                                <Button variant="outline-success" onClick={refreshTypes}>
+                                <Button variant="outline-success" onClick={fetchTypes}>
                                     <FontAwesomeIcon icon={faRotate} />
                                 </Button>
-                                <Form.Select id="type" onChange={e => setDumpsterType(e.target.value)}>
+                                <Form.Select id="type" onChange={e => setDumpsterType(e.target.value)} value={dumpsterType} defaultValue>
+                                    <option value hidden disabled>Escolha um tipo</option>
                                     {
                                         dumpstersTypes?.map(dumpsterType => {
                                             return (
