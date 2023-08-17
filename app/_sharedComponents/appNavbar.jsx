@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 export default function AppNavbar() {
     return (
         <Container fluid className="bg-body-tertiary mb-3">
-            <ToastContainer autoClose={2000} />
+            <ToastContainer autoClose={2000} draggablePercent={30} />
             <Navbar expand="lg">
                 <Link href="/" passHref legacyBehavior>
                     <Navbar.Brand>{process.env.NEXT_PUBLIC_COMPANY_NAME}</Navbar.Brand>
