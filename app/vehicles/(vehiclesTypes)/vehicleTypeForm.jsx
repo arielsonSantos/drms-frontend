@@ -6,21 +6,21 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
+import vehicleTypeService from "./VehicleTypeService";
 import { toast } from "react-toastify";
-import dumpsterTypeService from "./DumpsterTypeService";
 
-export default function DumpsterTypeForm({ hideModal, method = "post", selectedObject }) {
-    const [dumpsterTypeDescription, setDumpsterTypeDescription] = useState(selectedObject?.description || "");
+export default function VehicleTypeForm({ hideModal, method = "post", selectedObject }) {
+    const [vehicleTypeDescription, setVehicleTypeDescription] = useState(selectedObject?.description || "");
 
     function onSubmit(e) {
         e.preventDefault();
-        dumpsterTypeService.save({ "description": dumpsterTypeDescription }, method, selectedObject?.id)
+        vehicleTypeService.save({ "description": vehicleTypeDescription }, method, selectedObject?.id)
             .then(() => {
                 e.target.reset();
                 hideModal();
-                setDumpsterTypeDescription(null);
-                dumpsterTypeService.refreshAll();
-                toast.success(dumpsterTypeService.getEntityName() + " cadastrado com sucesso!");
+                setVehicleTypeDescription(null);
+                vehicleTypeService.refreshAll();
+                toast.success(vehicleTypeService.getEntityName() + " cadastrado com sucesso!");
             })
             .catch(error => {
                 toast.error(error);
@@ -38,7 +38,7 @@ export default function DumpsterTypeForm({ hideModal, method = "post", selectedO
                     </Col>
                     <Col>
                         <Form.Group>
-                            <Form.Control autoFocus value={dumpsterTypeDescription} type="text" id="description" onChange={(e) => setDumpsterTypeDescription(e.target.value)}></Form.Control>
+                            <Form.Control autoFocus value={vehicleTypeDescription} type="text" id="description" onChange={(e) => setVehicleTypeDescription(e.target.value)}></Form.Control>
                         </Form.Group>
                     </Col>
                 </Row>
