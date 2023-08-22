@@ -1,6 +1,6 @@
 "use client";
 
-import NetworkError from "./_sharedComponents/networkError";
+import NetworkError from "./_shared/_sharedComponents/networkError";
 
 export default function Error({ error, reset }) {
     return (

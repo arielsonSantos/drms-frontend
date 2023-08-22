@@ -24,6 +24,9 @@ export default function AppNavbar() {
                             <Link href="/dumpsters" passHref legacyBehavior>
                                 <NavDropdown.Item >Caçambas</NavDropdown.Item>
                             </Link>
+                            <Link href="/vehicles" passHref legacyBehavior>
+                                <NavDropdown.Item >Veículos</NavDropdown.Item>
+                            </Link>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
