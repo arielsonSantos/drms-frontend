@@ -9,10 +9,10 @@ import EditModal from "./editModal";
 export default function DRMSTable({ data, TableComponent, FormComponent, service }) {
     const [showDeleteModal, setDeleteModalShow] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
-    const [selectedEntity, setSelectedVehicle] = useState(null);
+    const [selectedEntity, setSelectedEntity] = useState(null);
 
     function handleDeleteModalShow(entity) {
-        setSelectedVehicle(entity);
+        setSelectedEntity(entity);
         setDeleteModalShow(true);
     }
 
@@ -21,7 +21,7 @@ export default function DRMSTable({ data, TableComponent, FormComponent, service
     }
 
     function handleEditModalShow(entity) {
-        setSelectedVehicle(entity);
+        setSelectedEntity(entity);
         setShowEditModal(true);
     }
 
@@ -34,7 +34,7 @@ export default function DRMSTable({ data, TableComponent, FormComponent, service
             .then(() => {
                 handleDeleteModalClose();
                 service.refreshAll();
-                setSelectedVehicle(null);
+                setSelectedEntity(null);
                 toast.success(service.getEntityName() + " excluído com sucesso!");
             })
             .catch(error => {
@@ -49,7 +49,7 @@ export default function DRMSTable({ data, TableComponent, FormComponent, service
             <TableComponent handleDeleteModalShow={handleDeleteModalShow} handleEditModalShow={handleEditModalShow}>
                 {data}
             </TableComponent>
-            <DeleteModal title={selectedEntity?.identifier} handleClose={handleDeleteModalClose} show={showDeleteModal} deleteFunction={deleteById} />
+            <DeleteModal title={service.getEntityName() /*TODO: Implement service methods for custom descriptions, messages and names*/} handleClose={handleDeleteModalClose} show={showDeleteModal} deleteFunction={deleteById} />
             <EditModal title={service.getEntityName()} handleClose={handleEditModalClose} Form={FormComponent} show={showEditModal} selectedObject={selectedEntity} />
         </div >
     );
