@@ -20,7 +20,7 @@ export default function DumpsterTypeForm({ hideModal, method = "post", selectedO
                 hideModal();
                 setDumpsterTypeDescription(null);
                 dumpsterTypeService.refreshAll();
-                toast.success(dumpsterTypeService.getEntityName() + " cadastrado com sucesso!");
+                toast.success(dumpsterTypeService.getSaveMessage());
             })
             .catch(error => {
                 toast.error(error);

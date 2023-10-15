@@ -4,7 +4,7 @@ export default function DeleteModal({ handleClose, show, title, deleteFunction }
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Excluir {`"${title?.toLowerCase()}"`}</Modal.Title>
+                <Modal.Title>Excluir {`"${title}"`}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <p>Confirma <strong>exclusão</strong> do item?</p>

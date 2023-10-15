@@ -7,12 +7,31 @@ export default class Services {
     #entityName;
 
     constructor(endpoint, entityName) {
+        if (this.contructor === Services)
+            throw new Error("Abstract classes can't be instantiate");
+
         this.#endpoint = endpoint;
         this.#entityName = entityName;
     }
 
     getEntityName() {
         return this.#entityName;
+    }
+
+    getEntityModalDescription(_entity) {
+        throw new Error("Method 'getEntityModalDescription()' must be implemented");
+    }
+
+    getEntityPluralName() {
+        throw new Error("Method 'getEntityPluralName()' must be implemented");
+    }
+
+    getSaveMessage() {
+        throw new Error("Method 'getSaveMessage()' must be implemented");
+    }
+
+    getDeletionMessage() {
+        throw new Error("Method 'getDeletionMessage()' must be implemented");
     }
 
     useGetAll(swr) {

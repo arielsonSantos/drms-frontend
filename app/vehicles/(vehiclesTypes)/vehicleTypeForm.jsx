@@ -20,7 +20,7 @@ export default function VehicleTypeForm({ hideModal, method = "post", selectedOb
                 hideModal();
                 setVehicleTypeDescription(null);
                 vehicleTypeService.refreshAll();
-                toast.success(vehicleTypeService.getEntityName() + " cadastrado com sucesso!");
+                toast.success(vehicleTypeService.getSaveMessage());
             })
             .catch(error => {
                 toast.error(error);

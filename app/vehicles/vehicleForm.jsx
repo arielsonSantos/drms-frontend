@@ -53,7 +53,7 @@ export default function VehicleForm({ hideModal, method = "post", selectedObject
                 setLicensePlate(null);
                 setVehicleType(null);
                 vehicleService.refreshAll();
-                toast.success(vehicleService.getEntityName() + " cadastrado com sucesso!");
+                toast.success(vehicleService.getSaveMessage());
             })
             .catch(error => {
                 toast.error(error.message);

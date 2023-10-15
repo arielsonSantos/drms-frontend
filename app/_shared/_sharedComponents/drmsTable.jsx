@@ -35,7 +35,7 @@ export default function DRMSTable({ data, TableComponent, FormComponent, service
                 handleDeleteModalClose();
                 service.refreshAll();
                 setSelectedEntity(null);
-                toast.success(service.getEntityName() + " excluído com sucesso!");
+                toast.success(service.getDeletionMessage());
             })
             .catch(error => {
                 toast.error(error.message);
@@ -44,13 +44,13 @@ export default function DRMSTable({ data, TableComponent, FormComponent, service
 
     return (
         <div>
-            <TableOptions title={service.getEntityName()} refresh={() => service.refreshAll()} Form={FormComponent} />
+            <TableOptions service={service} refresh={() => service.refreshAll()} Form={FormComponent} />
             <br />
             <TableComponent handleDeleteModalShow={handleDeleteModalShow} handleEditModalShow={handleEditModalShow}>
                 {data}
             </TableComponent>
-            <DeleteModal title={service.getEntityName() /*TODO: Implement service methods for custom descriptions, messages and names*/} handleClose={handleDeleteModalClose} show={showDeleteModal} deleteFunction={deleteById} />
-            <EditModal title={service.getEntityName()} handleClose={handleEditModalClose} Form={FormComponent} show={showEditModal} selectedObject={selectedEntity} />
+            <DeleteModal title={service.getEntityModalDescription(selectedEntity)} handleClose={handleDeleteModalClose} show={showDeleteModal} deleteFunction={deleteById} />
+            <EditModal title={service.getEntityModalDescription(selectedEntity)} handleClose={handleEditModalClose} Form={FormComponent} show={showEditModal} selectedObject={selectedEntity} />
         </div >
     );
 }

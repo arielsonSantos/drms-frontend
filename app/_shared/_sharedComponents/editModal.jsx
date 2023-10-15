@@ -4,7 +4,7 @@ export default function EditModal({ handleClose, show, title, Form, selectedObje
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Editar {title.toLowerCase()}</Modal.Title>
+                <Modal.Title>Editar {`"${title}"`}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form hideModal={handleClose} method="put" selectedObject={selectedObject} service={service} />
